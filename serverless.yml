@@ -1,0 +1,28 @@
+service: C5-group-1-Capstone
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  deploymentBucket:
+    name: cohort5.deployment
+
+
+functions:
+  dispatcher:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+      - sns:
+          arn: !Ref SuperTopic
+          topicName: C5-group-1-Capstone
+ 
+resources:
+  Resources:
+    SuperTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: C5-group-1-Capstone
+
