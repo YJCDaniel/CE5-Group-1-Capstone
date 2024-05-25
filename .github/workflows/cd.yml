@@ -1,0 +1,82 @@
+name: ECS Cluster Creation, Deployment and Destruction
+run-name: ${{ github.actor }} is making changes to ECS via GitHub Actions 🚀
+on:
+  workflow_dispatch:
+    inputs:
+        target_env:
+            type: environment
+            description: Select the environment
+        action:
+            type: choice
+            options:
+                - create
+                - destroy
+                - deploy
+            description: Select the action, whether to create or destroy ECS cluster
+  workflow_call:
+    inputs:
+        target_env:
+            type: string
+            required: true
+        action:
+            type: string
+            required: true
+jobs:
+    pre-action-step:
+        runs-on: ubuntu-latest
+    
+        steps:
+        - uses: actions/checkout@v4
+    
+        - name: print environment and action
+          run: | 
+            echo "env selected is ${{ inputs.target_env }}"
+            echo "action selected is ${{ inputs.action }}"
+
+    create-or-delete-ecs-cluster:
+        needs: [pre-action-step]
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v4
+
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: us-east-1
+
+        - name: Terraform init
+          run: terraform init
+
+        - name: Terraform workspace list
+          run: terraform workspace list
+
+        - name: Terraform workspace new environment and select
+          run: |
+            terraform workspace select ${{ inputs.target_env }} || terraform workspace new ${{ inputs.target_env }}
+            terraform workspace list
+
+        - name: Terraform apply or destroy
+          run: |
+            if [ "${{ inputs.action }}" = "create" ] || [ "${{ inputs.action }}" = "deploy"  ]; then
+              terraform plan -var-file=${{ inputs.target_env }}.tfvars
+              # Comment out apply to prevent creation of cluster
+              # terraform apply -var-file=${{ inputs.target_env }}.tfvars --auto-approve
+            elif [ "${{ inputs.action }}" = "destroy" ]; then
+              terraform destroy -var-file=${{ inputs.target_env }}.tfvars -auto-approve
+            fi
+
+    deploy_summary:
+        needs: [create-or-delete-ecs-cluster]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Adding markdown
+              run: |
+                echo '## 🚀 Preparing Deployment Summary 🚀' >> $GITHUB_STEP_SUMMARY
+
+                echo "| Environment           | Action                | Status        |" >> $GITHUB_STEP_SUMMARY
+                echo "|-----------------------|-----------------------|---------------|" >> $GITHUB_STEP_SUMMARY
+                echo "| ${{ inputs.target_env }}  | ${{ inputs.action }}  | Successful 🚀 |" >> $GITHUB_STEP_SUMMARY
+               
