@@ -1,0 +1,27 @@
+[
+    {
+      "cpu": 256,
+      "essential": true,
+      "image": "${image_url}",
+      "memory": 512,
+      "name": "${container_name}",
+      "portMappings": [
+        {
+            "name": "${port_name}",
+            "containerPort": "${container_port}",
+            "hostPort": "${host_port}",
+            "protocol": "tcp",
+            "appProtocol": "http"
+        }
+      ],
+      "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+                "awslogs-create-group": "true",
+                "awslogs-group": "${log_group_name}",
+                "awslogs-region": "${log_group_region}",
+                "awslogs-stream-prefix": "${log_group_prefix}"
+          }
+      }
+    }
+  ]
