@@ -14,7 +14,7 @@ resource "aws_lb" "ecs-alb" {
 }
 
 resource "aws_lb_target_group" "ecs-alb-tg" {
-  name        = "ce5-drp1-ecs-target-group"
+  name        = "ce5-grp1-ecs-target-group"
   target_type = "ip"
   port        = 80
   protocol    = "HTTP"
