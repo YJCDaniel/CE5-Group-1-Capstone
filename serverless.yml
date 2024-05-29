@@ -14,13 +14,5 @@ functions:
       - httpApi:
           path: /
           method: get
-      - sns:
-          arn: !Ref SuperTopic
-          topicName: C5-group-1-Capstone
+      
 
-resources:
-  Resources:
-    SuperTopic:
-      Type: AWS::SNS::Topic
-      Properties:
-        TopicName: C5-group-1-Capstone
