@@ -67,5 +67,5 @@ variable "ecr_url" {
 variable "ecr_image_name" {
     description = "ECR image name"
     type        = string
-    default     = "ce5-grp1-node-app"
+    default     = "CE5-grp1-node-app"
 }
