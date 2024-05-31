@@ -1,7 +1,7 @@
 variable "vpc_id" {
   description = "The ID of the VPC"
   type        = string
-  default     = "vpc-0aa58eaabb536e7d3" # Change accordingly
+  default     = "vpc-0aa58eaabb536e7d3"
 }
 
 variable "ex_role_arn" {
@@ -13,19 +13,19 @@ variable "ex_role_arn" {
 variable "sg_id" {
     description = "The security group id"
     type        = string
-    default     = "sg-0d27b7c2a485d0c74" # Change accordingly
+    default     = "sg-0d27b7c2a485d0c74"
 }
 
 variable "ecs_cluster_name" {
     description = "ECS cluster name"
     type        = string
-    default     = "CE5-group1-ecs-cluster" # Change accordingly
+    default     = "CE5-group1-capstone-ecs-cluster"
 }
 
 variable "ecs_service_name" {
     description = "ECS service name"
     type        = string
-    default     = "CE5-group1-ecs-service" # Change accordingly
+    default     = "CE5-group1-capstone-ecs-service"
 }
 
 variable "ecs_task_defn_family" {
@@ -37,7 +37,7 @@ variable "ecs_task_defn_family" {
 variable "ecs_container_name" {
     description = "ECS container name"
     type        = string
-    default     = "CE5-grp1-container"
+    default     = "CE5-grp1-capstone-container"
 }
 
 variable "ecs_port_name" {
@@ -67,5 +67,5 @@ variable "ecr_url" {
 variable "ecr_image_name" {
     description = "ECR image name"
     type        = string
-    default     = "ce5-grp1-node-app"
+    default     = "ce5-grp1-capstone-app"
 }

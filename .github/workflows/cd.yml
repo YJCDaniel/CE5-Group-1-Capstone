@@ -62,8 +62,7 @@ jobs:
           run: |
             if [ "${{ inputs.action }}" = "create" ] || [ "${{ inputs.action }}" = "deploy"  ]; then
               terraform plan -var-file=${{ inputs.target_env }}.tfvars
-              # Comment out apply to prevent creation of cluster
-              # terraform apply -var-file=${{ inputs.target_env }}.tfvars --auto-approve
+              terraform apply -var-file=${{ inputs.target_env }}.tfvars --auto-approve
             elif [ "${{ inputs.action }}" = "destroy" ]; then
               terraform destroy -var-file=${{ inputs.target_env }}.tfvars -auto-approve
             fi
