@@ -19,13 +19,13 @@ variable "sg_id" {
 variable "ecs_cluster_name" {
     description = "ECS cluster name"
     type        = string
-    default     = "CE5-group1-capstone-ecs-cluster"
+    default     = "CE5-group1-ecs-cluster"
 }
 
 variable "ecs_service_name" {
     description = "ECS service name"
     type        = string
-    default     = "CE5-group1-capstone-ecs-service"
+    default     = "CE5-group1-ecs-service"
 }
 
 variable "ecs_task_defn_family" {
@@ -37,7 +37,7 @@ variable "ecs_task_defn_family" {
 variable "ecs_container_name" {
     description = "ECS container name"
     type        = string
-    default     = "CE5-grp1-capstone-container"
+    default     = "CE5-grp1-container"
 }
 
 variable "ecs_port_name" {
@@ -67,5 +67,5 @@ variable "ecr_url" {
 variable "ecr_image_name" {
     description = "ECR image name"
     type        = string
-    default     = "ce5-grp1-capstone-app"
+    default     = "ce5-grp1-node-app"
 }
