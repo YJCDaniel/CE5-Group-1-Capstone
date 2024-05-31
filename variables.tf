@@ -19,31 +19,31 @@ variable "sg_id" {
 variable "ecs_cluster_name" {
     description = "ECS cluster name"
     type        = string
-    default     = "CE5-group1-ecs-cluster"
+    default     = "ce5-group1-ecs-cluster"
 }
 
 variable "ecs_service_name" {
     description = "ECS service name"
     type        = string
-    default     = "CE5-group1-ecs-service"
+    default     = "ce5-group1-ecs-service"
 }
 
 variable "ecs_task_defn_family" {
     description = "ECS task definition family name"
     type        = string
-    default     = "CE5Group1ecstaskdef"
+    default     = "ce5group1ecstaskdef"
 }
 
 variable "ecs_container_name" {
     description = "ECS container name"
     type        = string
-    default     = "CE5-grp1-container"
+    default     = "ce5-grp1-container"
 }
 
 variable "ecs_port_name" {
     description = "ECS port name"
     type        = string
-    default     = "Ce5-grp1-3000-tcp"
+    default     = "ce5-grp1-3000-tcp"
 }
 
 variable "ecs_host_port" {
