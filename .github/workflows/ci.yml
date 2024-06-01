@@ -1,0 +1,126 @@
+name: ECS Continuous Integration
+run-name: ${{ github.actor }} is running Continuous Integration on GitHub Actions 🚀
+on: [push]
+env: 
+  ECR_ENDPOINT: 255945442255.dkr.ecr.us-east-1.amazonaws.com
+jobs:
+  install-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Run installation of dependencies commands
+        run: npm install
+
+  code-vulnerability-scanning:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    outputs:
+      status: ${{ job.status }}
+    steps:
+        - name: Check out repository code
+          uses: actions/checkout@v4
+        - name: Install Snyk CLI
+          run: npm install -g snyk
+        - name: Run Snyk to check for vulnerabilities
+          uses: snyk/actions/node@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            args: --severity-threshold=high
+
+  iac-vulnerability-scanning:
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    outputs:
+      status: ${{ job.status }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+      - name: Run Snyk Code Scan And Check Snyk Scan Results
+        uses: snyk/actions/iac@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: "--report --severity-threshold=high --scan=resource-changes"
+
+  build-and-scan-image:
+    runs-on: ubuntu-latest
+    needs: [code-vulnerability-scanning, iac-vulnerability-scanning]
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: us-east-1
+      - name: Login to ECR
+        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ env.ECR_ENDPOINT }}
+      - name: Docker build and tag
+        run: |
+            docker build -t ${{ vars.IMAGE_NAME }} .
+            docker tag ${{ vars.IMAGE_NAME }}:latest ${{ env.ECR_ENDPOINT }}/${{ vars.IMAGE_NAME }}:latest
+      - name: Run image scan
+        uses: aquasecurity/trivy-action@master
+        with:
+            image-ref: '${{ vars.IMAGE_NAME }}:latest'
+            format: 'table'
+            # exit-code: '1'
+            ignore-unfixed: true
+            vuln-type: 'os,library'
+            severity: 'MEDIUM,HIGH,CRITICAL'
+      - name: Docker publish to ECR
+        run: docker push ${{ env.ECR_ENDPOINT }}/${{ vars.IMAGE_NAME }}:latest
+
+  deploy-image-dev:
+    needs: [build-and-scan-image]
+    name: "Deployed image to dev"
+    uses: yjcdaniel/CE5-Group-1-Capstone/.github/workflows/cd.yml@main
+    with:
+        target_env: "dev"
+        action: "deploy"
+    secrets: inherit
+    if: ${{ github.ref_name == 'main' || github.ref_name == 'develop' || startsWith(github.ref_name, 'feature/') }}
+
+  deploy-image-uat:
+    needs: [build-and-scan-image]
+    name: "Deployed image to uat"
+    uses: yjcdaniel/CE5-Group-1-Capstone/.github/workflows/cd.yml@main
+    with:
+        target_env: "uat"
+        action: "deploy"
+    secrets: inherit
+    if: ${{ startsWith(github.ref_name, 'release/') }}
+
+  deploy-image-prod:
+    needs: [build-and-scan-image, deploy-image-uat]
+    name: "Deployed image to prod"
+    uses: yjcdaniel/CE5-Group-1-Capstone/.github/workflows/cd.yml@main
+    with:
+        target_env: "prod"
+        action: "deploy"
+    secrets: inherit
+    if: ${{ startsWith(github.ref_name, 'release/') }}
+
+  build_summary:
+    needs: [code-vulnerability-scanning, iac-vulnerability-scanning]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Adding markdown
+        run: |
+          CODE_SCAN_STATUS=${{ needs.code-vulnerability-scanning.outputs.status }}
+          IAC_SCAN_STATUS=${{ needs.iac-vulnerability-scanning.outputs.status }}
+
+          echo '## 🚀 Preparing Build Summary 🚀' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+
+          echo "| Job Name        | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| code-scan       | $CODE_SCAN_STATUS |" >> $GITHUB_STEP_SUMMARY
+          echo "| iac-scan        | $IAC_SCAN_STATUS  |" >> $GITHUB_STEP_SUMMARY
+          
+          
