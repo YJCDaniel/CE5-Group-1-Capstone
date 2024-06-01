@@ -21,7 +21,7 @@ on:
           - create
           - destroy
           - deploy
-          
+
   workflow_call:
     inputs:
         target_env:
