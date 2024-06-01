@@ -3,16 +3,25 @@ run-name: ${{ github.actor }} is making changes to ECS via GitHub Actions 🚀
 on:
   workflow_dispatch:
     inputs:
-        target_env:
-            type: environment
-            description: Select the environment
-        action:
-            type: choice
-            options:
-                - create
-                - destroy
-                - deploy
-            description: Select the action, whether to create or destroy ECS cluster
+      target_env:
+        description: 'Select the environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      action:
+        description: 'Select the action, whether to create or destroy ECS cluster'
+        required: true
+        default: 'create'
+        type: choice
+        options:
+          - create
+          - destroy
+          - deploy
+          
   workflow_call:
     inputs:
         target_env:
