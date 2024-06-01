@@ -123,3 +123,4 @@ jobs:
           echo "| code-scan       | $CODE_SCAN_STATUS |" >> $GITHUB_STEP_SUMMARY
           echo "| iac-scan        | $IAC_SCAN_STATUS  |" >> $GITHUB_STEP_SUMMARY
           
+          

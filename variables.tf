@@ -1,7 +1,7 @@
 variable "vpc_id" {
   description = "The ID of the VPC"
   type        = string
-  default     = "vpc-0aa58eaabb536e7d3" # Change accordingly
+  default     = "vpc-0aa58eaabb536e7d3"
 }
 
 variable "ex_role_arn" {
@@ -13,37 +13,37 @@ variable "ex_role_arn" {
 variable "sg_id" {
     description = "The security group id"
     type        = string
-    default     = "sg-0d27b7c2a485d0c74" # Change accordingly
+    default     = "sg-0d27b7c2a485d0c74"
 }
 
 variable "ecs_cluster_name" {
     description = "ECS cluster name"
     type        = string
-    default     = "CE5-group1-ecs-cluster" # Change accordingly
+    default     = "ce5-group1-ecs-cluster"
 }
 
 variable "ecs_service_name" {
     description = "ECS service name"
     type        = string
-    default     = "CE5-group1-ecs-service" # Change accordingly
+    default     = "ce5-group1-ecs-service"
 }
 
 variable "ecs_task_defn_family" {
     description = "ECS task definition family name"
     type        = string
-    default     = "CE5Group1ecstaskdef"
+    default     = "ce5group1ecstaskdef"
 }
 
 variable "ecs_container_name" {
     description = "ECS container name"
     type        = string
-    default     = "CE5-grp1-container"
+    default     = "ce5-grp1-container"
 }
 
 variable "ecs_port_name" {
     description = "ECS port name"
     type        = string
-    default     = "Ce5-grp1-3000-tcp"
+    default     = "ce5-grp1-3000-tcp"
 }
 
 variable "ecs_host_port" {

@@ -1,0 +1,5 @@
+ecs_cluster_name = "ce5-grp1-ecs-cluster-dev"
+ecs_service_name = "ce5-grp1-ecs-service-dev"
+ecs_task_defn_family = "ce5-grp1-ecs-task-def-dev"
+ecs_container_name = "ce5-grp1-container-dev"
+ecs_port_name = "ce5-grp1-3000-tcp-dev"

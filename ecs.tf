@@ -54,7 +54,7 @@ resource "aws_ecs_service" "own_service" {
   }
 
   load_balancer {
-    target_group_arn = CE5_group1_target_group.ecs-alb-tg.arn
+    target_group_arn = aws_lb_target_group.ecs-alb-tg.arn
     container_name   = var.ecs_container_name
     container_port   = 3000
   }
