@@ -14,5 +14,9 @@ functions:
       - httpApi:
           path: /
           method: post
-      
 
+#keep lambda package smaller
+package:
+  exclude:
+    - node_modules/**
+    - venv/**
