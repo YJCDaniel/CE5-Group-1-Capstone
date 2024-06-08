@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const ses = new AWS.SES();
 
 exports.handler = async (event) => {
@@ -22,7 +21,7 @@ exports.handler = async (event) => {
                 Data: 'New Cleaning Service Enquiry'
             }
         },
-        Source: 'sender@example.com'
+        Source: 'jmesthy@gmail.com'
     };
 
     try {
