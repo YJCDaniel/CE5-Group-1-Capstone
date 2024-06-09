@@ -1,0 +1,5 @@
+ecs_cluster_name = "ce5-grp1-ecs-cluster-uat"
+ecs_service_name = "ce5-grp1-ecs-service-uat"
+ecs_task_defn_family = "ce5-grp1-ecs-task-def-uat"
+ecs_container_name = "ce5-grp1-container-uat"
+ecs_port_name = "ce5-grp1-3000-tcp-uat"
