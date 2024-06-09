@@ -94,7 +94,7 @@
             <textarea id="message" name="message" rows="4"
                 placeholder="Enter any additional information or special requests"></textarea>
 
-            <button type="button" onClick="submitToAPI(event)" class="btn btn-lg"
+            <button type="submit" onClick="submitToAPI(event)" class="btn btn-lg"
                 style="margin-top:20px;">Submit</button>
         </form>
     </div>
@@ -102,9 +102,9 @@
         &copy; 2024 SCTP CE5 Group 1. All rights reserved.
     </div>
     <script>
-        async function submitToAPI(event) {
+        const form = document.getElementById('enquiry-form').addEventListener('submit', async function (event) {
             event.preventDefault();
-            const form = document.getElementById('enquiry-form');
+
             const data = {
                 name: form.name.value,
                 phone: form.phone.value,
