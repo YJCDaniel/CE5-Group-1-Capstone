@@ -6,6 +6,7 @@ on:
       target_env:
         description: 'Select the environment'
         required: true
+        default: 'dev'
         type: choice
         options:
           - dev
@@ -14,6 +15,7 @@ on:
       action:
         description: 'Select the action, whether to create or destroy ECS cluster'
         required: true
+        default: 'create'
         type: choice
         options:
           - create
@@ -39,6 +41,26 @@ jobs:
           run: | 
             echo "env selected is ${{ inputs.target_env }}"
             echo "action selected is ${{ inputs.action }}"
+
+    deploy-lambda:
+       runs-on: ubuntu-latest
+       strategy:
+         matrix:
+           node-version: [18.x]
+       steps:
+       - uses: actions/checkout@v3
+       - name: Use Node.js ${{ matrix.node-version }}
+         uses: actions/setup-node@v3
+         with:
+           node-version: ${{ matrix.node-version }}
+       - run: npm ci
+       - name: serverless deploy
+         uses: serverless/github-action@v3.2
+         with:
+           args: deploy
+         env:
+           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}          
 
     create-or-delete-ecs-cluster:
         needs: [pre-action-step]
@@ -69,8 +91,8 @@ jobs:
           run: |
             if [ "${{ inputs.action }}" = "create" ] || [ "${{ inputs.action }}" = "deploy"  ]; then
               terraform plan -var-file=${{ inputs.target_env }}.tfvars
-              # Comment out apply to prevent creation of cluster
-              # terraform apply -var-file=${{ inputs.target_env }}.tfvars --auto-approve
+              terraform apply -var-file=${{ inputs.target_env }}.tfvars --auto-approve
+              
             elif [ "${{ inputs.action }}" = "destroy" ]; then
               terraform destroy -var-file=${{ inputs.target_env }}.tfvars -auto-approve
             fi
