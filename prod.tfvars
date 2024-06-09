@@ -1,0 +1,5 @@
+ecs_cluster_name = "ce5-grp1-ecs-cluster-prod"
+ecs_service_name = "ce5-grp1-ecs-service-prod"
+ecs_task_defn_family = "ce5-grp1-ecs-task-def-prod"
+ecs_container_name = "ce5-grp1-container-prod"
+ecs_port_name = "ce5-grp1-3000-tcp-prod"
