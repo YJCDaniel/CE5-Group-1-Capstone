@@ -53,11 +53,21 @@ def lambda_handler(event, context):
     except ClientError as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             'body': json.dumps(f"Error sending email: {e.response['Error']['Message']}")
         }
     else:
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             'body': json.dumps(f"Email sent! Message ID: {response['MessageId']}")
         }
 
