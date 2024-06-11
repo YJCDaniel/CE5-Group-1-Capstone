@@ -1,10 +1,11 @@
 {
   "name": "ce5-group-1-capstone",
   "version": "1.0.0",
-  "description": "",
+  "description": "Github branching strategy  CI/CD review setup in github  source code review  Architecture diagram ( Web server connection from client)  AWS resource requirement ( Diagram / Services)",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +18,6 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "supertest": "^7.0.0"
-  }
+  },
+  "keywords": []
 }
