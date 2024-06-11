@@ -5,6 +5,11 @@ from botocore.exceptions import ClientError
 email_address = 'jmesthy@gmail.com'
 
 def lambda_handler(event, context):
+
+    aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
+    aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+    region_name = os.environ.get('us-east-1', 'us-east-1')
+
     # Retrieve data from the POST request
     try:
         data = json.loads(event['body'])
