@@ -16,6 +16,12 @@ functions:
       - http:
           path: send-email
           method: post
+          cors:
+            origins:
+              - "*"
+            headers:
+              - Content-Type
+            allowCredentials: false
 
 #keep lambda package smaller
 package:

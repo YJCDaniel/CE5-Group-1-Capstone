@@ -1,6 +1,12 @@
 import json
+import os
 import boto3
+import logging
 from botocore.exceptions import ClientError
+
+# Configure logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 email_address = 'jmesthy@gmail.com'
 
@@ -19,11 +25,21 @@ def lambda_handler(event, context):
     except KeyError as e:
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             'body': json.dumps(f"Missing required field: {str(e)}")
         }
     except json.JSONDecodeError:
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            },
             'body': json.dumps("Invalid JSON in request body")
         }
 
@@ -55,7 +71,9 @@ def lambda_handler(event, context):
             },
             Source=sender,
         )
+        logger.info(f"Email sent! Message ID: {response['MessageId']}")
     except ClientError as e:
+        logger.error(f"Error sending email: {e.response['Error']['Message']}")
         return {
             'statusCode': 500,
             'headers': {
