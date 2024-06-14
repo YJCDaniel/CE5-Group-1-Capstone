@@ -106,7 +106,9 @@ For Main Branch:
 
 **Added Vulnerability Scan**
 
-- Snyk 
+- Snyk
+![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/56e8897c-8aec-4e3a-8351-789c6f1a6708)
+
 - npm audit
 
 _______________________________________________________________________________________
