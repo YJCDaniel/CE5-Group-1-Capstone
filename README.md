@@ -36,7 +36,7 @@ ________________________________________________________________________________
 <img width="553" alt="image" src="https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/150350335/1ca748ac-3a15-44a7-9084-025fb9b113cb">
 
 _______________________________________________________________________________________
-## Branching Strategies
+### Branching Strategies
 Production Branch (main)
 - [url]([https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline](https://github.com/YJCDaniel/CE5-Group-1-Capstone/blob/main)
 
@@ -47,7 +47,7 @@ Feature Branch (feature)
 - [url]([https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline/tree/feature](https://github.com/YJCDaniel/CE5-Group-1-Capstone/tree/Feature)
 
 _______________________________________________________________________________________
-## Security
+### Security
 
 
 **Branch protection rule activation for github**
@@ -73,55 +73,56 @@ For Main Branch:
 ![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/56e8897c-8aec-4e3a-8351-789c6f1a6708)
 _______________________________________________________________________________________
 
-## Secrets 
+### Secrets 
 
 Added AWS access keys to Github secrets for reference, variable name to use:
 
-- ![WhatsApp Image 2024-06-04 at 10 09 04_d3cf59e0](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/8071b4a4-4fec-4210-bd7a-e07db319d84d)
-
+![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/153523948/1c1d9483-a486-4b96-8524-1bb189804e6e)
+![WhatsApp Image 2024-06-04 at 10 09 04_d3cf59e0](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/8071b4a4-4fec-4210-bd7a-e07db319d84d)
 _______________________________________________________________________________________
-## CICD Pipeline
+### CICD Pipeline
 
-Create New Project 
-Create 2 new repositories on GitHub and assign appropriate access to the group members as collaborators based on their role.
-Web application repository 
-Backend AWS configuration repository
+For CI Pipeline : 
 
-Create Static Web page to run in ECS cluster.
+Create new repositories on GitHub and assign appropriate access to group members as collaborators based on their roles defined.
 
-Application is deployed to AWS.
+Deployed Severless Lambda to accept HTTP post request via SES email alerts. Provision backend AWS configuration repository as reference defined to the above CE5-Group 1 Capstone project.
+
+Create Static Web page and run in ECS clusters with the application services deployed to AWS Cloud Production Tier defined for the purpose of this Capstone project.
+
+For CD Pipeline : 
 
 Write CD pipeline
-A CD script should be written with Github actions The static webpages can be built, tests can be run, and the application can be deployed using the CD script. 
+A CD script should be written with Github actions, the static webpage can be built, test and deployed. Concurrence, the application services can be deployed using the CD script concurrently forming the CI/CD pipeline in totality.  
 
-Proper authentication and authorization are to be ensured in each environment in the CD Script, with the condition that credentials used for deploying development and production environments should not be the same.
+To conform to Cyber security posture , the team conform to AWS prescribed services to provide Web tier authentication, authorisation and accounting ( aka Cloud watch) to strengthen and ensured that each environment tier produce in the CD Scripts conform to security standard, with the priviling condition that credentials with strong key encryption used for deploying production and development environments should be properly sergerated.
 
-Proper handling of CICD Pipeline Secrets is to be carried out.
-
--  Master Branch is secured
--  Work with Pull Request & Merging
--  Create new Role on AWS and use the secret into Github, Not User
--  Get Key from AWS
-
-Write the Terraform script to be used in the CD pipeline.
--  Create a S3 bucket for storage
+From the proper handling of CICD Pipeline Secrets standpoint , the team review and conduct extensive Secret key privilleage access and artifact the result to proof that the Secrets key encrypt and secure the pipeline from end to end are carried out extensively.
 _______________________________________________________________________________________
+### Artifact for Cloud watch log extract : 
 
-### Lessons Learnt
-- When working with multiple that are dependent on GitHub actions secrets, the use of `secrets: inherit` should be included in the main workflow to ensure workflows downstream have access to secrets.
+![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/153523948/173cd3d7-edab-4938-b801-cc6ff205f49b)
 
-- When using composite workflow: eg call_workflow, cannot have more than 3 workflows. 
+### Artifact for SES trigger after post event : 
 
-- When using composite workflow: github secrets needs to be inherited, stated in Workflow.yml under call_worflow
+![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/153523948/1095a8e5-4be6-46a1-a0bc-956c3f37cebd)
 
-- If more than 1 person working on code on same branch like feature(without pull request needed to marge with code to repository), when I am working, I should always "git pull" frequently to see what are the changes made by others.
+_______________________________________________________________________________________
+## Lessons Learnt
+- The team under the guidance of the instructors deliberated that while working with multiple tasks functions that are dependent on GitHub actions secrets, the use of `secrets: inherit` should be included in the main workflow to ensure workflows downstream have access to secrets.
 
-- If use ```git add .``` accidentally for unwanted files, use ```git reset HEAD <filename>``` instead of git stash - this makes the files not able to add into repo unless manually git add <filename> again.
+- In addition ,for prudent Devops engineer should observe occurance When using composite workflows to handle complex tasks: github secrets need to be inherit and properly stated in Workflow.yml under call_worflow.
 
-### Areas for Improvements
-- Can parameterize bucket names and environment attributes in Github secrets and variables instead of hard coding in Terraform script for for flexibility
+- As guided by Course instructors as a best practice , If the project involves more than 1 person working on code relative to the same branch like features(without triggering a pull request need to merge with the code and sent to the repository), this is evidently seem when the team is working on the code, I should always "git pull" frequently to see what are the changes made by others members.
 
-- Can use container to get all the advance features for index.html to look professional with CSS.
+- During the lesson , instructors have highlighted that If we use ```git add .``` accidentally for unwanted files invoke, we should use ```git reset HEAD <filename>``` instead of git stash - this makes the files not able to add into repo unless manually git add <filename> again.
 
-  _______________________________________________________________________________________
+- Lastly , for prudent , awareness of cross origin resource sharing (CORS) settings need to be properly set up in particular when calling the Lambda function from a browser.
+
+## Areas for Improvements
+- Given more time , the team can explore a concrete 3-tier architecture with UAT to test bench the static web bench and provide better cyber security posture with the sergeration of the workload. 
+- Explore other third party severless function other than AWS managed service to compare performance metics i.e lattency of web loading and resource capacity
+- Adopt full scale JIRA project management to organise and dashboard the project workflows 
+
+:-) Happy Coding ! 
 
