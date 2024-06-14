@@ -3,9 +3,9 @@ ________________________________________________________________________________
 ## Company Profile
 SparkClean is a traditional cleaning company that specializes in cleaning house and small office. SparkClean used to take in services through phone call or walk in service. In year 2020 after Covid-19 hits the world, SparkClean decided to change their businesss by digitalization of taking the service order from phone call to Web request. 
 
-Link: http://ce5-grp1-ecs-alb-1434311630.us-east-1.elb.amazonaws.com/
+Link: http://ce5-grp1-cleaningservices.sctp-sandbox.com 
 
-
+_______________________________________________________________________________________
 ## The Team Consist of:
 - James Tan
 - Daniel Yang
@@ -14,10 +14,10 @@ Link: http://ce5-grp1-ecs-alb-1434311630.us-east-1.elb.amazonaws.com/
 _______________________________________________________________________________________
 ## Getting started
 
-To host a simple HTML file on an S3 static website, you can use a CI/CD pipeline to create an S3 bucket using Terraform. The newest index.html file from this GitHub repository can then be uploaded and automatically updated whenever there is a push to any branch.
+To host a simple HTML enquiry form to collect customer details and triggers a lambda function to send an email using AWS SES with the customer details. 
 
 _______________________________________________________________________________________
-## Dependencies
+## Tools and Technologies used:
 
 - npm
 - AWS S3 bucket
@@ -28,61 +28,24 @@ ________________________________________________________________________________
 - Route 53
 - Lambda
 - SES
-
-_______________________________________________________________________________________
-## Application Structure
-
-**workflow to run one after another**
-
-- to use a new <workflow>.yml file: 
-    - add workflow dispatch
-    - add  call-workflow1:
-    -       call-workflow2:
-    - add secrets to be inherit
-
-    - note that there cannot be more than 3 workflow, not supported
-
-
-**s3 bucket**
-```
-S3 Bucket for web hosting
-- after creation of s3 bucket, go into: 
-   - properties -> ensure Static website hosting is enabled
-   - permissions -> ensure bucket policy is made public 
-   - bucket name: group1-staticwebsite-bucket123321
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadmeGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::group1-staticwebsite-bucket123321/*"
-        }
-    ]
-}
-```
-
-
+- Serverless
+- Docker
 _______________________________________________________________________________________
 ### Architecture Diagram
 
 <img width="553" alt="image" src="https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/150350335/1ca748ac-3a15-44a7-9084-025fb9b113cb">
 
-
 _______________________________________________________________________________________
 ## Branching Strategies
 Production Branch (main)
-- [url](https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline)
+- [url]([https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline](https://github.com/YJCDaniel/CE5-Group-1-Capstone/blob/main)
 
 Development Branch (dev)
-- [url](https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline/tree/dev)
+- [url]([https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline/tree/dev](https://github.com/YJCDaniel/CE5-Group-1-Capstone/tree/Dev)
 
 Feature Branch (feature)
-- [url](https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline/tree/feature)
+- [url]([https://github.com/Group1-SCTPCloud/CapstoneProject-DevSecOps-CICDpipeline/tree/feature](https://github.com/YJCDaniel/CE5-Group-1-Capstone/tree/Feature)
 
-_As we uses simple html code, we have only a dev branch then to production branch_
 _______________________________________________________________________________________
 ## Security
 
@@ -108,26 +71,41 @@ For Main Branch:
 
 - Snyk
 ![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/56e8897c-8aec-4e3a-8351-789c6f1a6708)
-
-- npm audit
-
 _______________________________________________________________________________________
 
 ## Secrets 
 
 Added AWS access keys to Github secrets for reference, variable name to use:
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
-- BUCKET_TF_STATE
-- SNYK_TOKEN
+
+- ![WhatsApp Image 2024-06-04 at 10 09 04_d3cf59e0](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/8071b4a4-4fec-4210-bd7a-e07db319d84d)
 
 _______________________________________________________________________________________
+## CICD Pipeline
 
-**Key Roles**
-- Web Developer 
-- DevOps 
-- Cloud Engineer 
+Create New Project 
+Create 2 new repositories on GitHub and assign appropriate access to the group members as collaborators based on their role.
+Web application repository 
+Backend AWS configuration repository
 
+Create Static Web page to run in ECS cluster.
+
+Application is deployed to AWS.
+
+Write CD pipeline
+A CD script should be written with Github actions The static webpages can be built, tests can be run, and the application can be deployed using the CD script. 
+
+Proper authentication and authorization are to be ensured in each environment in the CD Script, with the condition that credentials used for deploying development and production environments should not be the same.
+
+Proper handling of CICD Pipeline Secrets is to be carried out.
+
+-  Master Branch is secured
+-  Work with Pull Request & Merging
+-  Create new Role on AWS and use the secret into Github, Not User
+-  Get Key from AWS
+
+Write the Terraform script to be used in the CD pipeline.
+-  Create a S3 bucket for storage
+_______________________________________________________________________________________
 
 ### Lessons Learnt
 - When working with multiple that are dependent on GitHub actions secrets, the use of `secrets: inherit` should be included in the main workflow to ensure workflows downstream have access to secrets.
@@ -145,40 +123,5 @@ ________________________________________________________________________________
 
 - Can use container to get all the advance features for index.html to look professional with CSS.
 
-- 
+  _______________________________________________________________________________________
 
-_______________________________________________________________________________________
-## CICD Pipeline
-
-
-Create New Project 
-Create 2 new repositories on GitHub and assign appropriate access to the group members as collaborators based on their role.
-Web application repository 
-Backend AWS configuration repository
-
-Create Static Web Application (S3) 
-Create 2 versions of a static website to be hosted on S3 to simulate a working CD pipeline
-
-Application is deployed to AWS.
-
-Write CD pipeline
-A CD script should be written with Github actions The static webpages can be built, tests can be run, and the application can be deployed using the CD script. 
-
-Proper authentication and authorization are to be ensured in each environment in the CD Script, with the condition that credentials used for deploying development and production environments should not be the same.
-
-Proper handling of CICD Pipeline Secrets is to be carried out.
-
--  Master Branch is secured
--  Work with Pull Request & Merging
--  Create new Role on AWS and use the secret into Github, Not User
--  Get Key from AWS
-
-Write the Terraform script to be used in the CD pipeline.
-- Create a S3 bucket for storage of Terraform state
--  Ensure that the .tf state file is stored remotely in a S3 bucket
--  Terraform script should replace the old version of the static website within the same bucket.
-
-
-
-
-_______________________________________________________________________________________
