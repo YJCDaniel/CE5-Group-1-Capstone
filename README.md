@@ -71,6 +71,10 @@ For Main Branch:
 
 - Snyk
 ![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/56e8897c-8aec-4e3a-8351-789c6f1a6708)
+
+- npm audit
+![image](https://github.com/YJCDaniel/CE5-Group-1-Capstone/assets/49025893/7f67b935-3069-4b32-91a9-c9e641820b4f)
+
 _______________________________________________________________________________________
 
 ### Secrets 
