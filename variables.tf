@@ -65,9 +65,8 @@ variable "ecr_url" {
 }
 
 variable "repository_name" {
-  description = "The name of the ECR repository"
+  description = "ce5-grp1-node-app"
   type        = string
-  default     = "ce5-grp1-node-app"
 }
 
 variable "ecr_image_name" {
