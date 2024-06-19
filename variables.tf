@@ -64,8 +64,8 @@ variable "ecr_url" {
     default     = "255945442255.dkr.ecr.us-east-1.amazonaws.com"
 }
 
-variable "repository_name" {
-  description = "Repository Name"
+variable "ecr_repository_name" {
+  description = "ECR Repository Name"
   type        = string
   default     = "ce5-grp1-node-app"
 }
