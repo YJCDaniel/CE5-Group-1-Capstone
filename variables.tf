@@ -65,8 +65,9 @@ variable "ecr_url" {
 }
 
 variable "repository_name" {
-  description = "ce5-grp1-node-app"
+  description = "Repository Name"
   type        = string
+  default     = "ce5-grp1-node-app"
 }
 
 variable "ecr_image_name" {

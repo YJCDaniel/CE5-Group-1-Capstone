@@ -60,8 +60,6 @@ jobs:
             aws-region: us-east-1
       - name: Login to ECR
         run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ env.ECR_ENDPOINT }}
-      - name: Create ecr repository
-        run: ecr.tf  
       - name: Docker build and tag
         run: |
             docker build -t ${{ vars.IMAGE_NAME }} .
