@@ -13,7 +13,7 @@
     "aws-sdk": "^2.1637.0",
     "express": "^4.19.2",
     "node": "^18.20.3",
-    "serverless": "^4.0.24"
+    "serverless": "^4.0.35"
   },
   "devDependencies": {
     "jest": "^29.7.0",
